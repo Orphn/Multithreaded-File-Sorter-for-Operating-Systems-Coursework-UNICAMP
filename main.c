@@ -11,7 +11,7 @@ int main(int argc, char *argv[]){
     int num_threads = 0;
 
     // Captura dos dados passados pela linha de comando, em ordem:
-    int num_threads = atoi(argv[1]); // Quantidade de Threads a serem utilizadas
+    num_threads = atoi(argv[1]); // Quantidade de Threads a serem utilizadas
     if(num_threads <= 0){
         puts("Quantidade de Threads inválida");
         return 1;
