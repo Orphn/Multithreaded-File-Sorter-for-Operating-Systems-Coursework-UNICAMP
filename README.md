@@ -10,6 +10,7 @@ Como rodar no computador de sistema Linux:
  -- Rodar o executável do programa por meio da linha de comando fornecida de exemplo: "./mergesort num_threads arq1.dat arq2.dat arqN.dat -o saida.dat".
 
 O programa é composto de diversos arquivos contendo suas respectivas funções nas quais:
+
     main.c: Contém o corpo do código, é a parte principal que instancia as Threads e faz as operações de contagem de tempo de execução total e cria o arquivo final;
 
     funcoes.h: Cabeçalho no qual possui a estrutura principal das Threads e o protótipo das funções utilizadas no código;
