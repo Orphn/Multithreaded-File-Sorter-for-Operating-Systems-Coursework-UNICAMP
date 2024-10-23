@@ -7,7 +7,8 @@ Como rodar no computador de sistema Linux:
 
  -- Utilizar na linha de comando a operação "make";
 
- -- Rodar o executável do programa por meio da linha de comando fornecida de exemplo: "./mergesort num_threads arq1.dat arq2.dat arqN.dat -o saida.dat".
+ -- Rodar o executável do programa por meio da linha de comando fornecida de exemplo: 
+ "./mergesort num_threads arq1.dat arq2.dat arqN.dat -o saida.dat".
 
 O programa é composto de diversos arquivos contendo suas respectivas funções nas quais:
 
