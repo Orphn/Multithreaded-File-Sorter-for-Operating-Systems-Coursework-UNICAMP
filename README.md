@@ -3,6 +3,7 @@ Código do Trabalho final de Sistemas Operacionais -- Feito por Renan Felipe Rod
 Trabalho: Criar um código modular e recursivo no qual pode dinâmicamente se adaptar à quantidades variáveis de Threads e Arquivos e tem por objetivo ordenar os arquivos de forma crescente e colocar seus respectivos valores ordenados em um arquivo de saída resultante.
 
 Como rodar no computador de sistema Linux:
+
  -- Com todos arquivos na pasta, utilizar o Makefile fornecido para compilar;
 
  -- Utilizar na linha de comando a operação "make";
