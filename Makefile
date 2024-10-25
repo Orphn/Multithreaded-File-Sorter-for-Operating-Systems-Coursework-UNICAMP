@@ -4,10 +4,10 @@ EXEC = mergesort
 # Compilador
 CC = gcc
 
-# Opções de compilação
+# Opções de compilação (bibliotecas)
 LIBS = -pthread -Wall -Wextra
 
-# Arquivos fonte
+# Arquivos fonte e resultados objeto
 FONTES = $(wildcard *.c)
 OBJETOS = $(FONTES:.c=.o)
 
@@ -26,6 +26,6 @@ $(EXEC): $(OBJETOS)
 run: $(EXEC)
 	./$(EXEC)
 
-# Limpar os arquivos gerados
+# Limpar os arquivos gerados pela compilação
 clean:
 	rm -f $(OBJETOS) $(EXEC)

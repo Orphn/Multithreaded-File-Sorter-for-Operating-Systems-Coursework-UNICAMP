@@ -7,7 +7,7 @@
 void *thread_func(void *arg){
     struct timespec inicio, fim;
 
-    // Inicializa a Thread com os valores de suas respectivas estruturas
+    // Essa linha transforma a entrada genérica da Thread "*void" para um ponteiro para a estrutura "info_thread" respectiva da Thread
     info_thread *info = (info_thread *)arg;
 
     int *valores = NULL;
@@ -26,8 +26,6 @@ void *thread_func(void *arg){
             continue;
         }
 
-        clock_gettime(CLOCK_MONOTONIC, &inicio); // Cronometra o tempo de leitura do arquivo
-
         /*
         * Leitura dos dados do arquivo selecionado no momento
         * Cada entrada de inteiro vai ser lida por linha do arquivo
@@ -44,20 +42,16 @@ void *thread_func(void *arg){
             valores[info->total_valores] = num;
             info->total_valores++;
         }
-        clock_gettime(CLOCK_MONOTONIC, &fim);
 
         fclose(arq);
 
-        double tempo_leitura = (fim.tv_sec - inicio.tv_sec) + (fim.tv_nsec - inicio.tv_nsec) / 1e9;
-        tempo_leitura_total += tempo_leitura;
     }
 
     clock_gettime(CLOCK_MONOTONIC, &inicio); // Cronometra o tempo de ordenação dos arquivos unificados
     quickSort(valores, 0, info->total_valores - 1);
     clock_gettime(CLOCK_MONOTONIC, &fim);
 
-    tempo_ordenacao = (fim.tv_sec - inicio.tv_sec) + (fim.tv_nsec - inicio.tv_nsec) / 1e9;
-    info->tempo_total = tempo_leitura_total + tempo_ordenacao; // Soma dos tempos de ordenação e leitura
+    info->tempo_total = (fim.tv_sec - inicio.tv_sec) + (fim.tv_nsec - inicio.tv_nsec) / 1e9; 
 
     pthread_exit(valores);
 }

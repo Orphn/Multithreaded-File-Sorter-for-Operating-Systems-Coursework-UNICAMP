@@ -12,6 +12,7 @@ typedef struct{
 void *thread_func(void *arg); // Função das Threads
 
 // Funções do algoritmo de ordenação
+// RETIRADO DE: https://www.geeksforgeeks.org/quick-sort-in-c/
 void troca_pos(int* a, int* b);
 void quickSort(int arr[], int low, int high);
 int partition(int arr[], int low, int high);
