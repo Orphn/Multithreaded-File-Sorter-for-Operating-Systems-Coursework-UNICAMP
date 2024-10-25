@@ -18,7 +18,7 @@ int main(int argc, char *argv[]){
     }
 
     int qnt_arq = argc - 4; // Quantidade de arquivos que vão ser ordenados
-    char *arq_saida = argv[argc - 1]; // Lê o nome do arquivo a ser criado
+    char *arq_saida = argv[argc-1]; // Lê o nome do arquivo a ser criado
     int temp = num_threads; // Arquivo temporário para detecção de erros caso a qnt de Threads > Arquivos
     
     if (qnt_arq < num_threads){
@@ -30,8 +30,8 @@ int main(int argc, char *argv[]){
     * IDs das Threads que vão ser criadas
     * Um vetor de estrutura onde vai estar as informações das Threads:
     * (Quantidade de Arquivos para cada Thread e os nomes dos arquivos)
-    * Então cria um vetor que armazena os valores das threads
-    * E posteriormente outro vetor que armazena o tamanho de cada vetor resultante das threads
+    * Então cria um vetor que armazena os valores das Threads
+    * E posteriormente outro vetor que armazena o tamanho de cada vetor resultante das Threads, ou seja, a quantidade de números que foram lidos pela Thread
     */
     pthread_t *TIDs = (pthread_t*)malloc(qnt_arq * sizeof(pthread_t));
     info_thread *arg_threads = (info_thread*)malloc(num_threads * sizeof(info_thread));
@@ -41,7 +41,7 @@ int main(int argc, char *argv[]){
     // Laço de repetição para instanciar os vetores onde vão ser armazenados a quantidade de arquivos / nomes dos arquivos / quantidade de valores na Thread
     for (int i = 0; i < num_threads; i++){
         arg_threads[i].qnt_arq = 0;
-        arg_threads[i].arq = (char **)malloc(qnt_arq / num_threads * sizeof(char *));
+        arg_threads[i].arq = (char**)malloc(qnt_arq / num_threads * sizeof(char*));
         arg_threads[i].total_valores = 0;
     }
 
@@ -74,7 +74,7 @@ int main(int argc, char *argv[]){
     * O argumento da função na Thread vai ser a estrutura criada anteriormente, que contém a quantidade de arquivos que vão ser lidos e seus nomes
     */
     for (int i = 0; i < num_threads; i++){
-        pthread_create(&TIDs[i], NULL, thread_func, (void *)&arg_threads[i]);
+        pthread_create(&TIDs[i], NULL, thread_func, (void*)&arg_threads[i]);
     }
 
     /*
@@ -106,9 +106,6 @@ int main(int argc, char *argv[]){
     for (int i = 0; i < tam_total; i++) {
         fprintf(saida, "%d\n", vetor_unificado[i]);  // Cada valor em uma nova linha do arquivo.dat
     }
-
-    clock_gettime(CLOCK_MONOTONIC, &fim);
-    double tempo_exec = (fim.tv_sec - inicio.tv_sec) + (fim.tv_nsec - inicio.tv_nsec) / 1e9; // Cálculo do tempo de execução total
     
     /*
     * Impressão dos tempos de execução de cada Thread e do Tempo total
@@ -125,7 +122,6 @@ int main(int argc, char *argv[]){
             printf("A Thread %d não executou.\n", i);
         }
     }
-    printf("Tempo total de execução: %.9lf segundos\n", tempo_exec);
 
     // Liberação de memória para os vetores alocados dinâmicamente
     for (int i = 0; i < num_threads; i++){
@@ -139,6 +135,10 @@ int main(int argc, char *argv[]){
     free(resultados);
     free(tam_resultados);
     free(vetor_unificado);
+
+    clock_gettime(CLOCK_MONOTONIC, &fim);
+    double tempo_exec = (fim.tv_sec - inicio.tv_sec) + (fim.tv_nsec - inicio.tv_nsec) / 1e9; // Cálculo do tempo de execução total
+    printf("Tempo total de execução: %.9lf segundos\n", tempo_exec);
 
     return 0;
 }
