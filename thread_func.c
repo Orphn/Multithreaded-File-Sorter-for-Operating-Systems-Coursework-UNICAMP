@@ -11,8 +11,6 @@ void *thread_func(void *arg){
     info_thread *info = (info_thread *)arg;
 
     int *valores = NULL;
-    double tempo_leitura_total = 0.0;
-    double tempo_ordenacao = 0.0;
 
     // Lê o nome dos arquivos que vão ser processados pela Thread
     for (int j = 0; j < info->qnt_arq; j++){
@@ -21,7 +19,7 @@ void *thread_func(void *arg){
 
         FILE *arq;
         arq = fopen(nome_arq, "r");
-        if (arq == NULL) {
+        if (arq == NULL){
             perror("Erro ao abrir o arquivo");
             continue;
         }
@@ -34,7 +32,7 @@ void *thread_func(void *arg){
         */
         while (fscanf(arq, "%d", &num) == 1){
             valores = realloc(valores, (info->total_valores + 1) * sizeof(int));
-            if (valores == NULL) {
+            if (valores == NULL){
                 perror("Erro no realloc");
                 fclose(arq);
                 pthread_exit(NULL);

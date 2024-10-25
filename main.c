@@ -59,7 +59,7 @@ int main(int argc, char *argv[]){
         arg_threads[t_index].qnt_arq++;
     }
 
-    /* Teste de Threads e arquivos
+    /* Teste de distribuição de Threads e Arquivos -- Ignorar
     for (int i = 0; i < num_threads; i++) {
         printf("Thread %d vai processar %d arquivos.\n", i, arg_threads[i].qnt_arq);
         for (int j = 0; j < arg_threads[i].qnt_arq; j++) {
