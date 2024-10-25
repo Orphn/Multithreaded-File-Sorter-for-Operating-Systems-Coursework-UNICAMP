@@ -17,7 +17,7 @@ int* unificar_valores(int** resultados, int* tam_resultados, int num_threads, in
     */ 
     int *vetor_unificado = (int*)malloc(tam_total * sizeof(int));
     if (vetor_unificado == NULL){
-        perror("Erro ao alocar memória para vetor unificado");
+        puts("Erro ao alocar memória para vetor unificado");
         return NULL;
     }
 

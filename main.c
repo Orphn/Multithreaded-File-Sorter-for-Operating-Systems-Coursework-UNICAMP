@@ -43,6 +43,7 @@ int main(int argc, char *argv[]){
         arg_threads[i].qnt_arq = 0;
         arg_threads[i].arq = (char**)malloc(qnt_arq / num_threads * sizeof(char*));
         arg_threads[i].total_valores = 0;
+        arg_threads[i].tempo_total = 0;
     }
 
     /*
@@ -99,7 +100,7 @@ int main(int argc, char *argv[]){
     */
     FILE *saida = fopen(arq_saida, "w");
     if (saida == NULL) {
-        perror("Erro ao abrir o arquivo de saída");
+        puts("Erro ao abrir o arquivo de saída");
         return EXIT_FAILURE;
     }
 
