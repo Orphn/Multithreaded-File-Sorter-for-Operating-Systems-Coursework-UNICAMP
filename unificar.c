@@ -23,7 +23,7 @@ int* unificar_valores(int** resultados, int* tam_resultados, int num_threads, in
 
     /*
     * Copia os resultados para o vetor unificado
-    * Os valores foram armazenados na estrutura de cada Thread
+    * Os valores foram armazenados de cada Thread
     */ 
     int index = 0;
     for (int i = 0; i < num_threads; i++){
