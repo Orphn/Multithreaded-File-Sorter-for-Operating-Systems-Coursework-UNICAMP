@@ -17,13 +17,13 @@ int* unificar_valores(int** resultados, int* tam_resultados, int num_threads, in
     */ 
     int *vetor_unificado = (int*)malloc(tam_total * sizeof(int));
     if (vetor_unificado == NULL){
-        perror("Erro ao alocar memória para vetor unificado");
+        puts("Erro ao alocar memória para vetor unificado");
         return NULL;
     }
 
     /*
     * Copia os resultados para o vetor unificado
-    * Os valores foram armazenados na estrutura de cada Thread
+    * Os valores foram armazenados de cada Thread
     */ 
     int index = 0;
     for (int i = 0; i < num_threads; i++){

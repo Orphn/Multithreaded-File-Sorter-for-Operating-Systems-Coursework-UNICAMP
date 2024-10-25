@@ -20,7 +20,7 @@ void *thread_func(void *arg){
         FILE *arq;
         arq = fopen(nome_arq, "r");
         if (arq == NULL){
-            perror("Erro ao abrir o arquivo");
+            puts("Erro ao abrir o arquivo");
             continue;
         }
 
@@ -33,7 +33,7 @@ void *thread_func(void *arg){
         while (fscanf(arq, "%d", &num) == 1){
             valores = realloc(valores, (info->total_valores + 1) * sizeof(int));
             if (valores == NULL){
-                perror("Erro no realloc");
+                puts("Erro no realloc");
                 fclose(arq);
                 pthread_exit(NULL);
             }
