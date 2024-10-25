@@ -11,8 +11,6 @@ void *thread_func(void *arg){
     info_thread *info = (info_thread *)arg;
 
     int *valores = NULL;
-    double tempo_leitura_total = 0.0;
-    double tempo_ordenacao = 0.0;
 
     // Lê o nome dos arquivos que vão ser processados pela Thread
     for (int j = 0; j < info->qnt_arq; j++){

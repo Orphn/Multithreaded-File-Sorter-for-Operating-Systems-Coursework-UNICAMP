@@ -5,7 +5,7 @@ EXEC = mergesort
 CC = gcc
 
 # Opções de compilação (bibliotecas)
-LIBS = -pthread -Wall -Wextra
+LIBS = -pthread
 
 # Arquivos fonte e resultados objeto
 FONTES = $(wildcard *.c)
