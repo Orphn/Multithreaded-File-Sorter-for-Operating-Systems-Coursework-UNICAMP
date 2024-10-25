@@ -46,7 +46,7 @@ void *thread_func(void *arg){
     }
 
     clock_gettime(CLOCK_MONOTONIC, &inicio); // Cronometra o tempo de ordenação dos arquivos unificados
-    quickSort(valores, 0, info->total_valores - 1);
+    quickSort(valores, 0, info->total_valores-1);
     clock_gettime(CLOCK_MONOTONIC, &fim);
 
     info->tempo_total = (fim.tv_sec - inicio.tv_sec) + (fim.tv_nsec - inicio.tv_nsec) / 1e9; 
