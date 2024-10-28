@@ -7,7 +7,7 @@
 void *thread_func(void *arg){
     struct timespec inicio, fim;
 
-    // Essa linha transforma a entrada genérica da Thread "*void" para um ponteiro para a estrutura "info_thread" respectiva da Thread
+    // Essa linha converte a entrada genérica da Thread "*void" para um ponteiro de estrutura "info_thread"
     info_thread *info = (info_thread *)arg;
 
     int *valores = NULL;
@@ -25,10 +25,10 @@ void *thread_func(void *arg){
         }
 
         /*
-        * Leitura dos dados do arquivo selecionado no momento
-        * Cada entrada de inteiro vai ser lida por linha do arquivo
-        * Os valores vão ser armazenados em um vetor dinâmico
-        * A contagem total dos valores nesse Thread vai ser incrementado a cada valor lido
+        A função seguinte faz a leitura dos dados do arquivo selecionado no momento
+        Cada entrada de inteiro vai ser lida do arquivo
+        Os valores vão ser armazenados em um vetor dinâmico
+        A contagem total dos valores nesse Thread vai ser incrementado a cada valor lido
         */
         while (fscanf(arq, "%d", &num) == 1){
             valores = realloc(valores, (info->total_valores + 1) * sizeof(int));
@@ -37,6 +37,7 @@ void *thread_func(void *arg){
                 fclose(arq);
                 pthread_exit(NULL);
             }
+            
             valores[info->total_valores] = num;
             info->total_valores++;
         }
@@ -46,7 +47,7 @@ void *thread_func(void *arg){
     }
 
     clock_gettime(CLOCK_MONOTONIC, &inicio); // Cronometra o tempo de ordenação dos arquivos unificados
-    quickSort(valores, 0, info->total_valores - 1);
+    quickSort(valores, 0, info->total_valores - 1); // Algoritmo de Sort utilizado para cada Thread
     clock_gettime(CLOCK_MONOTONIC, &fim);
 
     info->tempo_total = (fim.tv_sec - inicio.tv_sec) + (fim.tv_nsec - inicio.tv_nsec) / 1e9; 
