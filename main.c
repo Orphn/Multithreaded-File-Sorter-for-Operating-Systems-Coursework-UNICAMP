@@ -26,12 +26,12 @@ int main(int argc, char *argv[]){
     }
 
     /*
-    * Criação de vetores dinâmicos para:
-    * IDs das Threads que vão ser criadas
-    * Um vetor de estrutura onde vai estar as informações das Threads:
-    * (Quantidade de Arquivos para cada Thread e os nomes dos arquivos)
-    * Então cria um vetor que armazena os valores das Threads
-    * E posteriormente outro vetor que armazena o tamanho de cada vetor resultante das Threads, ou seja, a quantidade de números que foram lidos pela Thread
+    Criação de vetores dinâmicos para:
+    IDs das Threads que vão ser criadas
+    Um vetor de estrutura onde vai estar as informações das Threads:
+    (Quantidade de Arquivos para cada Thread e os nomes dos arquivos)
+    Então cria um vetor que armazena os valores das Threads
+    E posteriormente outro vetor que armazena o tamanho de cada vetor resultante das Threads, ou seja, a quantidade de números que foram lidos pela Thread
     */
     pthread_t *TIDs = (pthread_t*)malloc(qnt_arq * sizeof(pthread_t));
     info_thread *arg_threads = (info_thread*)malloc(num_threads * sizeof(info_thread));
@@ -44,20 +44,21 @@ int main(int argc, char *argv[]){
         arg_threads[i].arq = (char**)malloc(qnt_arq / num_threads * sizeof(char*));
         arg_threads[i].total_valores = 0;
         arg_threads[i].tempo_total = 0;
+        arg_threads[i].indice_procura = 0;
     }
 
     /*
-    * Loop com funções de alocação dos arquivos, no qual:
-    * Primeiramente, é utilizado a variável t_index para ciclicamente distribuir os arquivos para as Threads
-    * Em seguida, é realocado o tamanho do vetor dos arquivos, sempre dinamicamente expandindo o tamanho para a quantidade de arquivos e seus nomes que cada Thread vai processar
-    * Após isso, o nome do arquivo é atribuido a esse espaço que foi criado na posição correta do vetor
-    * Por fim, ao armazenar o nome, a variável qnt_arq é incrementada, indicando à Thread que agora tem um arquivo a mais atribuida à ela
+    Loop com funções de alocação dos arquivos, no qual:
+    Primeiramente, é utilizado a variável indice_thread para ciclicamente distribuir os arquivos para as Threads
+    Em seguida, é realocado o tamanho do vetor dos arquivos, sempre dinamicamente expandindo o tamanho para a quantidade de arquivos e seus nomes que cada Thread vai processar
+    Após isso, o nome do arquivo é atribuido a esse espaço que foi criado na posição correta do vetor
+    Por fim, ao armazenar o nome, a variável qnt_arq é incrementada, indicando à Thread que agora tem um arquivo a mais atribuida à ela
     */
     for (int i = 0; i < qnt_arq; i++){
-        int t_index = i % num_threads;
-        arg_threads[t_index].arq = realloc(arg_threads[t_index].arq, (arg_threads[t_index].qnt_arq + 1) * sizeof(char*));
-        arg_threads[t_index].arq[arg_threads[t_index].qnt_arq] = argv[i+2];
-        arg_threads[t_index].qnt_arq++;
+        int indice_thread = i % num_threads;
+        arg_threads[indice_thread].arq = realloc(arg_threads[indice_thread].arq, (arg_threads[indice_thread].qnt_arq + 1) * sizeof(char*));
+        arg_threads[indice_thread].arq[arg_threads[indice_thread].qnt_arq] = argv[i+2];
+        arg_threads[indice_thread].qnt_arq++;
     }
 
     /* Teste de distribuição de Threads e Arquivos -- Ignorar
@@ -70,17 +71,17 @@ int main(int argc, char *argv[]){
     */
 
     /*
-    * A função seguinte cria as Threads com base no valor que foi passado na linha de comando
-    * Cada Thread vai possuir um dos IDs que foram criados, sua função para execução e os argumentos da função
-    * O argumento da função na Thread vai ser a estrutura criada anteriormente, que contém a quantidade de arquivos que vão ser lidos e seus nomes
+    A função seguinte cria as Threads com base no valor que foi passado na linha de comando
+    Cada Thread vai possuir um dos IDs que foram criados, sua função para execução e os argumentos da função
+    O argumento da função na Thread vai ser a estrutura criada anteriormente (convertida para um *void), que contém a quantidade de arquivos que vão ser lidos e seus nomes
     */
     for (int i = 0; i < num_threads; i++){
         pthread_create(&TIDs[i], NULL, thread_func, (void*)&arg_threads[i]);
     }
 
     /*
-    * A função seguinte espera todas as Threads terminarem e retornarem seus vetores ordenados resultantes
-    * Ao mesmo tempo, o laço atualiza o tamanho total de valores que foram processados pelas Threads para cada index diferente
+    A função seguinte espera todas as Threads terminarem e retornarem seus vetores ordenados resultantes
+    Ao mesmo tempo, o laço atualiza o tamanho total de valores que foram processados pelas Threads para cada index diferente
     */
     for (int i = 0; i < num_threads; i++){
         pthread_join(TIDs[i], (void**)&resultados[i]);
@@ -93,11 +94,9 @@ int main(int argc, char *argv[]){
         tam_total += tam_resultados[i];
     }
 
-    int *vetor_unificado = unificar_valores(resultados, tam_resultados, num_threads, &tam_total); // Função utilizada para unificar os valores e ordená-los
+    int *vetor_unificado = unificar_valores(resultados, tam_resultados, num_threads, arg_threads); // Função utilizada para unificar os valores e ordená-los
 
-    /*
-    * Criação do arquivo de saída com o nome referenciado na linha de comando
-    */
+    // Criação do arquivo de saída com o nome referenciado na linha de comando
     FILE *saida = fopen(arq_saida, "w");
     if (saida == NULL) {
         puts("Erro ao abrir o arquivo de saída");
@@ -109,11 +108,11 @@ int main(int argc, char *argv[]){
     }
     
     /*
-    * Impressão dos tempos de execução de cada Thread e do Tempo total
-    * A função verifica através do arquivo temporário quais Threads foram necessárias para a execução
-    * Caso Threads > Arquivos, o sistema automaticamente descarta as Threads que não foram necessárias
-    * A partir disso, as Threads que foram executadas recebem seus tempos de execução
-    * Enquanto as desnecessárias ficam na condição de "não executou"
+    Impressão dos tempos de execução de cada Thread e do Tempo total
+    A função verifica através da variável temp quais Threads foram necessárias para a execução
+    Caso Threads > Arquivos, o sistema automaticamente descarta as Threads que não foram necessárias
+    A partir disso, as Threads que foram executadas recebem seus tempos de execução
+    Enquanto as desnecessárias ficam na condição de "não executou"
     */
     for (int i = 0; i < temp; i++){
         if(i < num_threads){
@@ -137,6 +136,7 @@ int main(int argc, char *argv[]){
     free(tam_resultados);
     free(vetor_unificado);
 
+    // Fim da contagem de tempo
     clock_gettime(CLOCK_MONOTONIC, &fim);
     double tempo_exec = (fim.tv_sec - inicio.tv_sec) + (fim.tv_nsec - inicio.tv_nsec) / 1e9; // Cálculo do tempo de execução total
     printf("Tempo total de execução: %.9lf segundos\n", tempo_exec);
