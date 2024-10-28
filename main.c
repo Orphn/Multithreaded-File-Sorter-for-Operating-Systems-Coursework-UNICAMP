@@ -125,8 +125,8 @@ int main(int argc, char *argv[]){
 
     // Liberação de memória para os vetores alocados dinâmicamente
     for (int i = 0; i < num_threads; i++){
-        free(arg_threads[i].arq); // Estrutura
-        free(resultados[i]);
+        free(arg_threads[i].arq); // Nomes dos arquivos
+        free(resultados[i]); // Vetores com os resultados de cada Thread
     }
 
     // Vetores
