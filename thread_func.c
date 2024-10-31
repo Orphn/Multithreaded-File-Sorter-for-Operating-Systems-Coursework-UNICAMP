@@ -6,6 +6,7 @@
 
 void *thread_func(void *arg){
     struct timespec inicio, fim;
+    clock_gettime(CLOCK_MONOTONIC, &inicio); // Cronometra o tempo da Thread
 
     // Essa linha converte a entrada genérica da Thread "*void" para um ponteiro de estrutura "info_thread"
     info_thread *info = (info_thread *)arg;
@@ -45,12 +46,10 @@ void *thread_func(void *arg){
         fclose(arq);
 
     }
-
-    clock_gettime(CLOCK_MONOTONIC, &inicio); // Cronometra o tempo de ordenação dos arquivos unificados
     quickSort(valores, 0, info->total_valores - 1); // Algoritmo de Sort utilizado para cada Thread
-    clock_gettime(CLOCK_MONOTONIC, &fim);
 
-    info->tempo_total = (fim.tv_sec - inicio.tv_sec) + (fim.tv_nsec - inicio.tv_nsec) / 1e9; 
+    clock_gettime(CLOCK_MONOTONIC, &fim);
+    info->tempo_total = (fim.tv_sec - inicio.tv_sec) + (fim.tv_nsec - inicio.tv_nsec) / 1e9; // Calcula o tempo total de operação da Thread e salva o valor na estrutura
 
     pthread_exit(valores);
 }
