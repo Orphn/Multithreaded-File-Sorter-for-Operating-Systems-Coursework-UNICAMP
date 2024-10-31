@@ -5,8 +5,9 @@
 #include "funcoes.h" // Cabeçalho dos protótipos das funções utilizadas
 
 int main(int argc, char *argv[]){
-    // Contador de tempo de execução (do inicio até o fim da execução das Threads)
+    // Contador de tempo de execução (do inicio até o fim da criação do arquivo de saída)
     struct timespec inicio, fim;
+    clock_gettime(CLOCK_MONOTONIC, &inicio);
     int num_threads = 0;
 
     // Captura dos dados passados pela linha de comando, em ordem:
@@ -74,7 +75,6 @@ int main(int argc, char *argv[]){
     Cada Thread vai possuir um dos IDs que foram criados, sua função para execução e os argumentos da função
     O argumento da função na Thread vai ser a estrutura criada anteriormente (convertida para um *void), que contém a quantidade de arquivos que vão ser lidos e seus nomes
     */
-    clock_gettime(CLOCK_MONOTONIC, &inicio);
     for (int i = 0; i < num_threads; i++){
         pthread_create(&TIDs[i], NULL, thread_func, (void*)&arg_threads[i]);
     }
@@ -87,7 +87,6 @@ int main(int argc, char *argv[]){
         pthread_join(TIDs[i], (void**)&resultados[i]);
         tam_resultados[i] = arg_threads[i].total_valores;
     }
-    clock_gettime(CLOCK_MONOTONIC, &fim);
     
     // Calcula o tamanho total dos resultados -- registrando esse valor totalizado em uma variável
     int tam_total = 0;
@@ -124,9 +123,6 @@ int main(int argc, char *argv[]){
         }
     }
 
-    double tempo_exec = (fim.tv_sec - inicio.tv_sec) + (fim.tv_nsec - inicio.tv_nsec) / 1e9; // Cálculo do tempo de execução total
-    printf("Tempo total de execução: %.9lf segundos\n", tempo_exec);
-    
     // Liberação de memória para os vetores alocados dinâmicamente
     for (int i = 0; i < num_threads; i++){
         free(arg_threads[i].arq); // Nomes dos arquivos
@@ -139,6 +135,11 @@ int main(int argc, char *argv[]){
     free(resultados);
     free(tam_resultados);
     free(vetor_unificado);
+
+    // Fim da contagem de tempo
+    clock_gettime(CLOCK_MONOTONIC, &fim);
+    double tempo_exec = (fim.tv_sec - inicio.tv_sec) + (fim.tv_nsec - inicio.tv_nsec) / 1e9; // Cálculo do tempo de execução total
+    printf("Tempo total de execução: %.9lf segundos\n", tempo_exec);
 
     return 0;
 }
