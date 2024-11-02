@@ -25,17 +25,14 @@ int main(int argc, char *argv[]){
         num_threads = qnt_arq;
     }
 
-    /*
-    Criação de vetores dinâmicos para:
-    IDs das Threads que vão ser criadas
-    Um vetor de estrutura onde vai estar as informações das Threads:
-    (Quantidade de Arquivos para cada Thread e os nomes dos arquivos)
-    Então cria um vetor que armazena os valores das Threads
-    E posteriormente outro vetor que armazena o tamanho de cada vetor resultante das Threads, ou seja, a quantidade de números que foram lidos pela Thread
-    */
+   //Criação de vetores dinâmicos para:
+    //IDs das Threads que vão ser criadas:
     pthread_t *TIDs = (pthread_t*)malloc(qnt_arq * sizeof(pthread_t));
+    //Vetor de struct onde estará guardada as informações da Threads: (Quantidade de Arquivos para cada Thread e os nomes dos arquivos)
     info_thread *arg_threads = (info_thread*)malloc(num_threads * sizeof(info_thread));
+    //Vetor que armazena os valores da Threads
     int **resultados = (int**)malloc(num_threads * sizeof(int*));
+    //Vetor que armazena o tamanho de cada vetor resultante das Threads, ou seja, a quantidade de números que foram lidos pela Thread
     int *tam_resultados = (int*)malloc(num_threads * sizeof(int));
 
     // Laço de repetição para instanciar os vetores onde vão ser armazenados a quantidade de arquivos / nomes dos arquivos / quantidade de valores na Thread
