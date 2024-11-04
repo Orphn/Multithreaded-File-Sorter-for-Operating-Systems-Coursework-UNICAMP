@@ -19,7 +19,7 @@ int main(int argc, char *argv[]){
 
     int qnt_arq = argc - 4; // Quantidade de arquivos que vão ser ordenados
     char *arq_saida = argv[argc-1]; // Lê o nome do arquivo a ser criado
-    int temp = num_threads; // Arquivo temporário para detecção de erros caso a qnt de Threads > Arquivos
+    int temp = num_threads; // Arquivo temporário para detecção de erros caso a qnt de Threads > arquivos
     
     if (qnt_arq < num_threads){
         num_threads = qnt_arq;
