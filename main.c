@@ -25,7 +25,11 @@ int main(int argc, char *argv[]){
         num_threads = qnt_arq;
     }
 
+<<<<<<< HEAD
     //Criação de vetores dinâmicos para:
+=======
+   //Criação de vetores dinâmicos para:
+>>>>>>> f29c5e401b7756b398535b61d5abf94169e1a618
     //IDs das Threads que vão ser criadas:
     pthread_t *TIDs = (pthread_t*)malloc(qnt_arq * sizeof(pthread_t));
     //Vetor de struct onde estará guardada as informações da Threads: (Quantidade de Arquivos para cada Thread e os nomes dos arquivos)
