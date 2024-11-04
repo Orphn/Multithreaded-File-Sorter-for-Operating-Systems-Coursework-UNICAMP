@@ -19,13 +19,13 @@ int main(int argc, char *argv[]){
 
     int qnt_arq = argc - 4; // Quantidade de arquivos que vão ser ordenados
     char *arq_saida = argv[argc-1]; // Lê o nome do arquivo a ser criado
-    int temp = num_threads; // Arquivo temporário para detecção de erros caso a qnt de Threads > Arquivos
+    int temp = num_threads; // Arquivo temporário para detecção de erros caso a qnt de Threads > arquivos
     
     if (qnt_arq < num_threads){
         num_threads = qnt_arq;
     }
 
-   //Criação de vetores dinâmicos para:
+    //Criação de vetores dinâmicos para:
     //IDs das Threads que vão ser criadas:
     pthread_t *TIDs = (pthread_t*)malloc(qnt_arq * sizeof(pthread_t));
     //Vetor de struct onde estará guardada as informações da Threads: (Quantidade de Arquivos para cada Thread e os nomes dos arquivos)
@@ -35,13 +35,13 @@ int main(int argc, char *argv[]){
     //Vetor que armazena o tamanho de cada vetor resultante das Threads, ou seja, a quantidade de números que foram lidos pela Thread
     int *tam_resultados = (int*)malloc(num_threads * sizeof(int));
 
-    // Laço de repetição para instanciar os vetores onde vão ser armazenados a quantidade de arquivos / nomes dos arquivos / quantidade de valores na Thread
+    //Laço de repetição para instanciar os vetores onde vão ser armazenados:
     for (int i = 0; i < num_threads; i++){
-        arg_threads[i].qnt_arq = 0;
-        arg_threads[i].arq = (char**)malloc(qnt_arq / num_threads * sizeof(char*));
-        arg_threads[i].total_valores = 0;
-        arg_threads[i].tempo_total = 0;
-        arg_threads[i].indice_procura = 0;
+        arg_threads[i].qnt_arq = 0; // quantidade de arquivos
+        arg_threads[i].arq = (char**)malloc(qnt_arq / num_threads * sizeof(char*)); // nomes dos arquivos
+        arg_threads[i].total_valores = 0; // quantidade de valores na Thread
+        arg_threads[i].tempo_total = 0; // tempo de execução
+        arg_threads[i].indice_procura = 0; // indice de procura do mergesort
     }
 
     /*
