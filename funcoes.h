@@ -1,5 +1,5 @@
-#include <pthread.h>
-#include <time.h>
+#ifndef FUNCOES_H // Proteção contra erros de redefinição do cabeçalho
+#define FUNCOES_H
 
 // Estrutura que contém os dados das Threads
 typedef struct{
@@ -19,3 +19,5 @@ void quickSort(int arr[], int low, int high);
 int partition(int arr[], int low, int high);
 
 int* unificar_valores(int** resultados, int* tam_resultados, int num_threads, info_thread* arg_threads); // Função para unificar os vetores obtidos das Threads
+
+#endif // FUNCOES_H
