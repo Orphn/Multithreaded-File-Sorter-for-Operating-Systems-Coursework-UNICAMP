@@ -8,6 +8,13 @@ int main(int argc, char *argv[]){
     // Contador de tempo de execução (do inicio até o fim da criação do arquivo de saída)
     struct timespec inicio, fim;
     clock_gettime(CLOCK_MONOTONIC, &inicio);
+
+    // Teste para prevenir erros caso o usuário coloque menos argumentos que o mínimo na linha de comando
+    if(argc < 5){
+        printf("Quantidade de argumentos incorreta\n");
+        return 1;
+    }
+
     int num_threads = 0;
 
     // Captura dos dados passados pela linha de comando, em ordem:
