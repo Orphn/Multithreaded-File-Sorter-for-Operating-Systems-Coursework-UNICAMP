@@ -93,7 +93,7 @@ int main(int argc, char *argv[]){
     FILE *saida = fopen(arq_saida, "w");
     if (saida == NULL) {
         puts("Erro ao abrir o arquivo de saida");
-        return EXIT_FAILURE;
+        return 1;
     }
 
     for (int i = 0; i < tam_total; i++) {
