@@ -74,8 +74,8 @@ int main(int argc, char *argv[]){
     }
 
     /*
-    A funcao seguinte espera todas as Threads terminarem e retornarem seus vetores ordenados resultantes
-    Ao mesmo tempo, o laco atualiza o tamanho total de valores que foram processados pelas Threads para cada index diferente
+    A funcao seguinte espera todas as Threads terminarem
+    Retornando seus vetores ordenados resultantes para a matriz resultados, no qual vai armazenar cada vetor ordenado em uma linha
     */
     for (int i = 0; i < num_threads; i++){
         pthread_join(TIDs[i], (void**)&resultados[i]);
