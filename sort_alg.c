@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include "funcoes.h"
 
-// RETIRADO DE: https://www.geeksforgeeks.org/quick-sort-in-c/
+// IMPLEMENTADO DE: https://www.geeksforgeeks.org/quick-sort-in-c/
 
-// Função troca a posição de dois valores que estão desordenados
+// Funcao troca a posicao de dois valores que estao desordenados
 void troca_pos(int* a, int* b){
     int temp = *a;
     *a = *b;
@@ -12,18 +12,18 @@ void troca_pos(int* a, int* b){
 
 int partition(int vetor[], int men, int mai){
 
-    // Inicializa o pivô como sendo o primeiro elemento
+    // Inicializa o pivo como sendo o primeiro elemento
     int p = vetor[men];
     int i = men;
     int j = mai;
 
     while (i < j) {
-        // Encontra o primeiro elemento maior que o pivô (a partir do início)
+        // Encontra o primeiro elemento maior que o pivo (a partir do inicio)
         while (vetor[i] <= p && i <= mai - 1){
             i++;
         }
 
-        // Encontra o primeiro elemento menor que o pivô (a partir do final)
+        // Encontra o primeiro elemento menor que o pivo (a partir do final)
         while (vetor[j] > p && j >= men + 1){
             j--;
         }
@@ -38,10 +38,10 @@ int partition(int vetor[], int men, int mai){
 void quickSort(int vetor[], int men, int mai){
     if (men < mai) {
 
-        // Chama a função partition para encontrar o índice de partição
+        // Chama a funcao partition para encontrar o indice de particao
         int pi = partition(vetor, men, mai);
 
-        // Chama recursivamente quickSort() para a metade esquerda e direita com base no Índice de Partição
+        // Chama recursivamente quickSort() para a metade esquerda e direita com base no indice de Particao
         quickSort(vetor, men, pi - 1);
         quickSort(vetor, pi + 1, mai);
     }

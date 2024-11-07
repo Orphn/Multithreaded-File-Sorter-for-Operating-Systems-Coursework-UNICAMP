@@ -8,12 +8,12 @@ void *thread_func(void *arg){
     struct timespec inicio, fim;
     clock_gettime(CLOCK_MONOTONIC, &inicio); // Cronometra o tempo da Thread
 
-    // Essa linha converte a entrada genérica da Thread "*void" para um ponteiro de estrutura "info_thread"
+    // Essa linha converte a entrada generica da Thread "*void" para um ponteiro de estrutura "info_thread"
     info_thread *info = (info_thread *)arg;
 
     int *valores = NULL;
 
-    // Lê o nome dos arquivos que vão ser processados pela Thread
+    // Le o nome dos arquivos que vao ser processados pela Thread
     for (int j = 0; j < info->qnt_arq; j++){
         char *nome_arq = info->arq[j];
         int num;
@@ -26,9 +26,9 @@ void *thread_func(void *arg){
         }
 
         /*
-        A função seguinte faz a leitura dos dados do arquivo selecionado no momento
+        A funcao seguinte faz a leitura dos dados do arquivo selecionado no momento
         Cada entrada de inteiro vai ser lida do arquivo
-        Os valores vão ser armazenados em um vetor dinâmico
+        Os valores vao ser armazenados em um vetor dinamico
         A contagem total dos valores nesse Thread vai ser incrementado a cada valor lido
         */
         while (fscanf(arq, "%d", &num) == 1){
@@ -49,7 +49,7 @@ void *thread_func(void *arg){
     quickSort(valores, 0, info->total_valores - 1); // Algoritmo de Sort utilizado para cada Thread
 
     clock_gettime(CLOCK_MONOTONIC, &fim);
-    info->tempo_total = (fim.tv_sec - inicio.tv_sec) + (fim.tv_nsec - inicio.tv_nsec) / 1e9; // Calcula o tempo total de operação da Thread e salva o valor na estrutura
+    info->tempo_total = (fim.tv_sec - inicio.tv_sec) + (fim.tv_nsec - inicio.tv_nsec) / 1e9; // Calcula o tempo total de operacao da Thread e salva o valor na estrutura
 
     pthread_exit(valores);
 }
