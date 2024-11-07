@@ -1,10 +1,10 @@
-# Nome do executável
+# Nome do executavel
 EXEC = mergesort
 
 # Compilador
 CC = gcc
 
-# Opções de compilação (bibliotecas)
+# Opções de compilacao (bibliotecas)
 LIBS = -pthread
 
 # Arquivos fonte e resultados objeto
@@ -14,7 +14,7 @@ OBJETOS = $(FONTES:.c=.o)
 # Regra principal
 all: $(EXEC)
 
-# Regra para criar o executável
+# Regra para criar o executavel
 $(EXEC): $(OBJETOS)
 	$(CC) $(LIBS) -o $@ $^
 
@@ -26,6 +26,6 @@ $(EXEC): $(OBJETOS)
 run: $(EXEC)
 	./$(EXEC)
 
-# Limpar os arquivos gerados pela compilação
+# Limpar os arquivos gerados pela compilacao
 clean:
 	rm -f $(OBJETOS) $(EXEC)
