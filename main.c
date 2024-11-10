@@ -11,7 +11,7 @@ int main(int argc, char *argv[]){
 
     // Teste para prevenir erros caso o usuario coloque menos argumentos que o minimo na linha de comando
     if(argc < 5){
-        printf("Quantidade de argumentos incorreta\n");
+        puts("Quantidade de argumentos incorreta");
         return 1;
     }
 
