@@ -1,24 +1,39 @@
-Código do Trabalho final de Sistemas Operacionais -- Feito por Renan Felipe Rodrigues e Nicolas Lourenço Mafei
+# Multithreaded File Sorter – Operating Systems Final Project
 
-Trabalho: Criar um código modular e recursivo no qual pode dinâmicamente se adaptar à quantidades variáveis de Threads e Arquivos e tem por objetivo ordenar os arquivos de forma crescente e colocar seus respectivos valores ordenados em um arquivo de saída resultante.
+This project was developed as the final assignment for the Operating Systems course at UNICAMP by **Renan Felipe Rodrigues** and **Nicolas Lourenço Mafei**.
 
-Como rodar no computador de sistema Linux:
+The objective is to build a **modular and recursive program in C** that supports a **dynamic number of threads and input files**. Each thread is responsible for reading and sorting a subset of input files using QuickSort. The sorted arrays are then merged into a single output file.
 
- -- Com todos arquivos na pasta, utilizar o Makefile fornecido para compilar;
+---
 
- -- Utilizar na linha de comando a operação "make";
+## Features
 
- -- Rodar o executável do programa por meio da linha de comando fornecida de exemplo: 
- "./mergesort num_threads arq1.dat arq2.dat arqN.dat -o saida.dat".
+- Dynamic handling of any number of threads and input files
+- Thread-level performance measurement using `clock_gettime`
+- Modular file structure with separation of concerns
+- Sorting based on QuickSort (adapted from GeeksforGeeks)
+- Final merging step implements a merge logic across sorted arrays
 
-O programa é composto de diversos arquivos contendo suas respectivas funções nas quais:
+---
 
-    main.c: Contém o corpo do código, é a parte principal que instancia as Threads e faz as operações de contagem de tempo de execução total e cria o arquivo final;
+## File Structure
 
-    funcoes.h: Cabeçalho no qual possui a estrutura principal das Threads e o protótipo das funções utilizadas no código;
+- `main.c` — Initializes threads, manages time tracking, and writes the final sorted result.
+- `funcoes.h` — Header file defining the thread data structure and function prototypes.
+- `sort_alg.c` — Implements the QuickSort algorithm (source: [GeeksforGeeks](https://www.geeksforgeeks.org/quick-sort-in-c/)).
+- `thread_func.c` — Thread function responsible for reading, storing, and sorting integers from assigned files.
+- `unificar.c` — Merges the sorted arrays from all threads into a single ordered array.
+- `Makefile` — Compile automation.
 
-    sort_alg.c: Algoritmo de Quick Sort retirado e implementado a partir de (https://www.geeksforgeeks.org/quick-sort-in-c/);
+---
 
-    thread_func.c: Função que é utilizada pelas Threads, no qual tem a função de ordenar os arquivos que foram delegados e retornar um vetor com esses valores ordenados;
-    
-    unificar.c: Tem a função de unificar todos os vetores resultantes de cada Thread separada, de forma a criar um vetor único e retorná-lo para a main.
+## Compilation and Execution
+
+Ensure all files are in the same directory, then run:
+
+```bash
+make
+```  
+```bash
+./mergesort num_threads file1.dat file2.dat ... fileN.dat -o output.dat
+```
